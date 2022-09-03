@@ -1,0 +1,20 @@
+#include <iostream>
+ 
+using namespace std;
+ 
+int main()
+{
+   
+   int step1 =5;
+    int x ;
+    int z =0;
+    cin >> x ;
+    if(x%5==0){
+        z = x/step1; 
+    }else {
+         z = (x/step1)+1; 
+    }
+ 
+std::cout << z << std::endl;
+    return 0;
+}
