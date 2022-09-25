@@ -1,0 +1,27 @@
+#include <iostream>
+ 
+using namespace std;
+ 
+int main()
+{
+    int k, w,n;
+    cin>>k>>w>>n;
+    int sum =0; 
+        for (int i = 1 ; i<=n ; i++){
+        sum +=i*k;
+        
+        
+    }
+    
+    int re= sum-w;
+    if(sum>w){
+        int re= sum-w;
+            cout<<re;
+ 
+    }else{
+     cout<<0;   
+    }
+    
+ 
+    return 0;
+}
