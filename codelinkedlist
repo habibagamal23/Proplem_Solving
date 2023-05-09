@@ -1,0 +1,106 @@
+#include <iostream>
+
+using namespace std;
+
+// Node struct for the linked list
+struct Node {
+    int data;       // Data stored in the node
+    Node* next;     // Pointer to the next node in the list
+
+    // Constructor that initializes the data and next pointer
+    Node(int data) {
+        this->data = data;
+        this->next = nullptr;
+    }
+};
+
+// Linked list class
+class LinkedList {
+public:
+    LinkedList() {
+        head = nullptr;
+    }
+
+    // Insert a new node at the beginning of the list
+    void insertAtBeginning(int data) {
+        Node* newNode = new Node(data);
+        newNode->next = head;
+        head = newNode;
+    }
+
+    // Insert a new node at the end of the list
+    void insertAtEnd(int data) {
+        Node* newNode = new Node(data);
+
+        if (head == nullptr) {
+            head = newNode;
+            return;
+        }
+
+        Node* current = head;
+        while (current->next != nullptr) {
+            current = current->next;
+        }
+        current->next = newNode;
+    }
+
+    // Remove a node from the list by its data
+    void remove(int data) {
+        if (head == nullptr) {
+            return;
+        }
+
+        if (head->data == data) {
+            Node* temp = head;
+            head = head->next;
+            delete temp;
+            return;
+        }
+
+        Node* current = head;
+        while (current->next != nullptr) {
+            if (current->next->data == data) {
+                Node* temp = current->next;
+                current->next = temp->next;
+                delete temp;
+                return;
+            }
+            current = current->next;
+        }
+    }
+
+    // Print out the linked list
+    void printList() {
+        Node* current = head;
+        while (current != nullptr) {
+            cout << current->data << " ";
+            current = current->next;
+        }
+        cout << endl;
+    }
+
+private:
+    Node* head;     // Pointer to the first node in the list
+};
+
+// Main function to test the linked list
+int main() {
+    LinkedList list;
+
+    list.insertAtBeginning(3);
+    list.insertAtBeginning(2);
+    list.insertAtBeginning(1);
+
+    list.printList();
+
+    list.insertAtEnd(4);
+    list.insertAtEnd(5);
+
+    list.printList();
+
+    list.remove(3);
+
+    list.printList();
+
+    return 0;
+}
