@@ -1,0 +1,95 @@
+Suppose you are working on a project for a social media platform. You need to create a linked
+list to represent a user's list of followers. Each follower should have a unique identifier and a
+username. You need to implement a function that takes a follower's unique identifier and
+returns their username. Write a function to solve this problem.
+
+__________________________________________________________________________________________________
+
+
+
+#include <iostream>
+
+using namespace std;
+
+struct Follower {
+    int id ;
+        string username;
+     Follower *next;
+      Follower(int id , string username ){
+          this->id = id;
+          this->username = username;
+          this->next = NULL;
+          
+          
+      }
+     
+    
+};
+
+class FollowerList{
+    
+     public :
+     
+     Follower *head;
+     
+     FollowerList() {
+        head = NULL;
+    }
+    
+                                                  
+    void add_folower(Follower *follower){
+        if(head == NULL){
+            
+            head= follower;
+        }
+        else{
+            Follower *current = head ;
+            
+            while(current->next != NULL){
+                current= current->next;
+                
+            }
+            current->next =  follower;
+        }
+    }
+    
+    void printlist (){
+        
+        Follower * current =head ;
+        while (current !=NULL){
+            
+           cout << current->username << " ";
+            current = current->next; 
+        }
+        
+        cout << endl;
+        
+    }
+    string finduser(int id){
+        
+        Follower* current = head;
+        while(current !=NULL){
+            if(current->id == id){
+                return current->username;
+            }
+            return ""; 
+        }
+        
+    }
+};
+
+
+int main()
+{
+ 
+     FollowerList list;
+ 
+    // Add three followers to the list
+    list.add_folower(new Follower(1, "john"));
+    list.add_folower(new Follower(2, "jane"));
+    list.printlist();
+
+        cout<<list.finduser(1); 
+    
+}
+
