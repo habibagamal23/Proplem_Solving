@@ -1,0 +1,102 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+// Define a class to represent a patient
+class Patient {
+public:
+    string name;
+    int age;
+    string medical_condition;
+    Patient* next;
+
+    // Constructor to initialize the patient's attributes
+    Patient(string name, int age, string medical_condition) {
+        this->name = name;
+        this->age = age;
+        this->medical_condition = medical_condition;
+        this->next = NULL;
+    }
+};
+
+// Define a class to represent the waiting list
+class WaitingList {
+public:
+    Patient* head;
+
+    // Constructor to initialize an empty waiting list
+    WaitingList() {
+        head = NULL;
+    }
+
+    // Method to add a patient to the waiting list
+    void add_patient(Patient* patient) {
+        if (head == NULL) {
+            // If the list is empty, make the new patient the head of the list
+            head = patient;
+        } else {
+            // Otherwise, find the last patient in the list and add the new patient after them
+            Patient* current = head;
+            while (current->next != NULL) {
+                current = current->next;
+            }
+            current->next = patient;
+        }
+    }
+
+    // Method to remove the patient with the highest priority based on their medical condition
+    void remove_highest_priority() {
+        if (head == NULL) {
+            // If the list is empty, print a message to the console and return
+            cout << "Waiting list is empty." << endl;
+            return;
+        }
+
+        // Loop over the list to find the patient with the highest priority
+        Patient* current = head;
+        Patient* prev = NULL;
+        Patient* highest_priority = NULL;
+        Patient* highest_priority_prev = NULL;
+
+        while (current != NULL) {
+            if (highest_priority == NULL || current->medical_condition < highest_priority->medical_condition) {
+                highest_priority = current;
+                highest_priority_prev = prev;
+            }
+            prev = current;
+            current = current->next;
+        }
+
+        // Remove the patient with the highest priority from the list
+        if (highest_priority == head) {
+            // If the highest priority patient is the head of the list, update the head attribute to point to the next patient
+            head = head->next;
+        } else {
+            // Otherwise, update the next attribute of the previous patient to point to the next patient after the highest priority patient
+            highest_priority_prev->next = highest_priority->next;
+        }
+
+        // Print a message to the console indicating which patient was removed
+        cout << "Removed patient with highest priority: " << highest_priority->name << endl;
+
+        // Free the memory used by the removed patient
+        delete highest_priority;
+    }
+};
+
+// Main function to test the waiting list implementation
+int main() {
+    // Create a new waiting list and add some patients to it
+    WaitingList waiting_list;
+    waiting_list.add_patient(new Patient("John Smith", 35, "Heart attack"));
+    waiting_list.add_patient(new Patient("Jane Doe", 25, "Broken arm"));
+    waiting_list.add_patient(new Patient("Jim Brown", 50, "Stroke"));
+
+    // Remove patients from the waiting list until it is empty
+    waiting_list.remove_highest_priority();
+    waiting_list.remove_highest_priority();
+    waiting_list.remove_highest_priority();
+    waiting_list.remove_highest_priority();
+
+    return 0;
+}
